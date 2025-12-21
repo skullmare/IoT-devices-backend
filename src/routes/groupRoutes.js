@@ -7,7 +7,8 @@ const {
   addMember,
   removeMember,
   addDeviceToGroup,
-  removeDeviceFromGroup
+  removeDeviceFromGroup,
+  deleteGroup  // убедитесь, что функция импортирована
 } = require("../controllers/groupController");
 
 const router = express.Router();
@@ -19,5 +20,7 @@ router.post("/:id/members", authRequired, addMember);
 router.delete("/:id/members/:memberId", authRequired, removeMember);
 router.post("/:id/devices", authRequired, addDeviceToGroup);
 router.delete("/:id/devices/:deviceId", authRequired, removeDeviceFromGroup);
+// Новый маршрут для удаления группы
+router.delete("/:id", authRequired, deleteGroup);
 
 module.exports = router;

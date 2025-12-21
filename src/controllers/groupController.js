@@ -136,6 +136,37 @@ async function removeDeviceFromGroup(req, res) {
   return res.json({ ok: true });
 }
 
+async function deleteGroup(req, res) {
+  const { id } = req.params;
+  
+  const group = await Group.findById(id);
+  if (!group) return res.status(404).json({ error: "Group not found" });
+  
+  // Проверяем, что текущий пользователь - владелец группы
+  if (group.owner.toString() !== req.user.id) {
+    return res.status(403).json({ error: "Only group owner can delete the group" });
+  }
+  
+  try {
+    // Удаляем группу из всех связанных устройств
+    await Device.updateMany(
+      { groups: group._id },
+      { $pull: { groups: group._id } }
+    );
+    
+    // Удаляем саму группу
+    await Group.findByIdAndDelete(id);
+    
+    return res.json({ 
+      ok: true,
+      message: "Group deleted successfully" 
+    });
+  } catch (error) {
+    console.error("Error deleting group:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 module.exports = {
   listMyGroups,
   getGroup,
@@ -143,5 +174,6 @@ module.exports = {
   addMember,
   removeMember,
   addDeviceToGroup,
-  removeDeviceFromGroup
+  removeDeviceFromGroup,
+  deleteGroup  // добавьте эту строку
 };

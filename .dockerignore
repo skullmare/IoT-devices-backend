@@ -1,0 +1,43 @@
+# Игнорируем node_modules
+node_modules
+npm-debug.log
+
+# Игнорируем файлы окружения
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Игнорируем системные файлы
+.DS_Store
+Thumbs.db
+
+# Игнорируем git
+.git
+.gitignore
+
+# Игнорируем IDE файлы
+.vscode
+.idea
+*.swp
+*.swo
+
+# Игнорируем логи
+logs
+*.log
+
+# Игнорируем временные файлы
+tmp
+temp
+
+# Игнорируем покрытие тестами
+coverage
+
+# Игнорируем файлы сборки
+dist
+build
+
+# Игнорируем документацию
+README.md
+CHANGELOG.md

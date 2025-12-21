@@ -1,4 +1,6 @@
+const mongoose = require("mongoose"); // Добавьте эту строку
 const { DeviceTemplate } = require("../models/DeviceTemplate");
+const { Device } = require("../models/Device"); // Добавьте импорт модели Device
 
 async function listTemplates(req, res) {
   const items = await DeviceTemplate.find().sort({ createdAt: -1 }).lean();
@@ -33,9 +35,26 @@ async function updateTemplate(req, res) {
 
 async function deleteTemplate(req, res) {
   const { id } = req.params;
-  const tpl = await DeviceTemplate.findByIdAndDelete(id);
-  if (!tpl) return res.status(404).json({ error: "Not found" });
-  return res.json({ ok: true });
+  
+  try {
+    // 1. Удаляем все устройства, связанные с этим шаблоном
+    await Device.deleteMany({ template: id });
+    
+    // 2. Удаляем сам шаблон
+    const tpl = await DeviceTemplate.findByIdAndDelete(id);
+    
+    if (!tpl) {
+      return res.status(404).json({ error: "Not found" });
+    }
+    
+    return res.json({ 
+      ok: true, 
+      message: "Template and all associated devices deleted successfully" 
+    });
+  } catch (error) {
+    console.error("Error deleting template:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 module.exports = { listTemplates, createTemplate, updateTemplate, deleteTemplate };
