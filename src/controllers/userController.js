@@ -9,7 +9,8 @@ async function me(req, res) {
     role: user.role,
     username: user.username,
     firstName: user.firstName,
-    lastName: user.lastName
+    lastName: user.lastName,
+    image: user.image
   });
 }
 
@@ -36,7 +37,9 @@ async function searchUsers(req, res) {
       username: u.username,
       firstName: u.firstName,
       lastName: u.lastName,
-      role: u.role
+      role: u.role,
+      image: u.image
+      
     }))
   });
 }

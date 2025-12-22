@@ -39,6 +39,7 @@ async function telegramLogin(req, res) {
         username: verified.user.username || "",
         firstName: verified.user.first_name || "",
         lastName: verified.user.last_name || "",
+        image: verified.user.photo_url || "",
         role,
       },
     },
