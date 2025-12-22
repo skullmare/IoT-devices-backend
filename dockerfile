@@ -18,7 +18,7 @@ RUN chown -R node:node /usr/src/app
 USER node
 
 # Открываем порт, на котором работает приложение
-EXPOSE 3000
+EXPOSE 4000
 
 # Команда для запуска приложения
 CMD ["node", "src/index.js"]
