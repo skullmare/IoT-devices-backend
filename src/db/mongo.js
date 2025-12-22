@@ -34,7 +34,7 @@ async function connectMongo(mongoUri, dbName) {
       dbName: databaseName
     };
     
-    await mongoose.connect(connectionUri, options);
+    await mongoose.connect(uri, options);
     
     console.log("✅ MongoDB connected successfully");
     console.log(`📊 Database: ${mongoose.connection.name}`);
