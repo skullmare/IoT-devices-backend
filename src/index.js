@@ -8,7 +8,7 @@ const { startWs } = require("./services/wsService");
 
 async function main() {
   // Подключаемся без параметров (функция будет читать process.env)
-  await connectMongo(env.MONGO_URI, env.MONGO_DB);
+  await connectMongo(env.MONGO_URI);
 
   const app = createApp();
   const server = http.createServer(app);
