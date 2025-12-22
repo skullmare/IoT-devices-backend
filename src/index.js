@@ -7,7 +7,8 @@ const { startMqtt } = require("./services/mqttService");
 const { startWs } = require("./services/wsService");
 
 async function main() {
-  await connectMongo(env.MONGO_URI);
+  // Подключаемся без параметров (функция будет читать process.env)
+  await connectMongo(env.MONGO_URI, env.MONGO_DB);
 
   const app = createApp();
   const server = http.createServer(app);
@@ -24,4 +25,3 @@ main().catch((err) => {
   console.error("Fatal error:", err);
   process.exit(1);
 });
-
